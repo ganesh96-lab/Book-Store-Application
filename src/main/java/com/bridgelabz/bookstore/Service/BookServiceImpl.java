@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-@Service
+import java.util.ArrayList;
+import java.util.List;
 
-public class BookServiceImpl {
+@Service
+public class BookServiceImpl implements IBookService {
     @Autowired
     private BookRepository bookRepository;
     public void saveBookData(){
@@ -32,7 +34,19 @@ public class BookServiceImpl {
             }
         }catch (IOException e){
             e.printStackTrace();
-
         }
+    }
+
+    @Override
+    public List<Book> searchBook(String searchBookString) {
+       List<Book> relatedBookList=new ArrayList<>();
+        List<Book> bookList = bookRepository.findAll();
+        for(Book book:bookList){
+           if(book.getTitle().toLowerCase().contains(searchBookString.toLowerCase()) ||
+                   book.getAuthor().toLowerCase().contains(searchBookString.toLowerCase())){
+               relatedBookList.add(book);
+           }
+       }
+       return relatedBookList;
     }
 }
