@@ -40,4 +40,9 @@ public class BookStoreController {
     public ResponseEntity<List<Book>> sortByPriceDesc(){
         return new ResponseEntity<>(bookService.sortBooksByPriceDesc(), HttpStatus.OK);
     }
+
+    @GetMapping("/sortBynewArrival")
+    public ResponseEntity<List<Book>> sortByPublishDate(){
+        return new ResponseEntity<>(bookService.sortBooksByPublishDate(), HttpStatus.OK);
+    }
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +33,7 @@ public class BookServiceImpl implements IBookService {
                 book.setPrice(Integer.parseInt(data[4]));
                 System.out.println("description"+data[5]);
                 book.setDescription(data[5]);
+                book.setPublishDate(LocalDate.now());
                 bookRepository.save(book);
             }
         }catch (IOException e){
@@ -42,8 +44,8 @@ public class BookServiceImpl implements IBookService {
     @Override
     public List<Book> searchBook(String searchBookString) {
        List<Book> relatedBookList=new ArrayList<>();
-        List<Book> bookList = bookRepository.findAll();
-        for(Book book:bookList){
+       List<Book> bookList = bookRepository.findAll();
+       for(Book book:bookList){
            if(book.getTitle().toLowerCase().contains(searchBookString.toLowerCase()) ||
                    book.getAuthor().toLowerCase().contains(searchBookString.toLowerCase())){
                relatedBookList.add(book);
@@ -70,6 +72,11 @@ public class BookServiceImpl implements IBookService {
     @Override
     public List<Book> sortBooksByPriceDesc() {
         return bookRepository.findAllByOrderByPriceDesc();
+    }
+
+    @Override
+    public List<Book> sortBooksByPublishDate() {
+        return bookRepository.findAllByOrderByPublishDateDesc();
     }
 
 }

@@ -3,6 +3,7 @@ package com.bridgelabz.bookstore.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.time.LocalDate;
 
 @Entity
 public class Book {
@@ -16,6 +17,15 @@ public class Book {
     @Column(length = 4000)
     private String description;
     private int price;
+    private LocalDate publishDate;
+
+    public LocalDate getPublishDate() {
+        return publishDate;
+    }
+
+    public void setPublishDate(LocalDate publishDate) {
+        this.publishDate = publishDate;
+    }
 
     public String getId() {
         return id;

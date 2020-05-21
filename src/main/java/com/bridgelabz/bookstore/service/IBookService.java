@@ -10,4 +10,5 @@ public interface IBookService {
      List<Book> showAllBooks();
      List<Book> sortBooksByPriceAsc();
      List<Book> sortBooksByPriceDesc();
+     List<Book> sortBooksByPublishDate();
 }
