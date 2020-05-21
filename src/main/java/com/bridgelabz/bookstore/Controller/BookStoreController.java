@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/book-store")
 public class BookStoreController {
     @Autowired
     private IBookService bookService;
@@ -23,5 +24,10 @@ public class BookStoreController {
     @GetMapping("/searchBook")
     public ResponseEntity<List<Book>> searchBook(@RequestParam String searchBookString){
         return new ResponseEntity<>(bookService.searchBook(searchBookString), HttpStatus.OK);
+    }
+
+    @GetMapping("/showAllBooks")
+    public ResponseEntity<List<Book>> showallBooks(){
+        return new ResponseEntity<>(bookService.showAllBooks(), HttpStatus.OK);
     }
 }

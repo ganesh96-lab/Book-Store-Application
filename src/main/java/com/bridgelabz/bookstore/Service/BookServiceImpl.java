@@ -49,4 +49,14 @@ public class BookServiceImpl implements IBookService {
        }
        return relatedBookList;
     }
+
+    @Override
+    public List<Book> showAllBooks() {
+        List<Book> bookList=new ArrayList<>();
+        List<Book> allBooks = bookRepository.findAll();
+        for (Book book:allBooks){
+            bookList.add(book);
+        }
+        return bookList;
+    }
 }
