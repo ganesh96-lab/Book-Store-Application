@@ -1,8 +1,7 @@
-package com.bridgelabz.bookstore.Model;
+package com.bridgelabz.bookstore.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
@@ -14,9 +13,9 @@ public class Book {
     private String author;
     private String title;
     private String image;
-    @Column(length = 2000)
+    @Column(length = 4000)
     private String description;
-    private String price;
+    private int price;
 
     public String getId() {
         return id;
@@ -58,11 +57,11 @@ public class Book {
         this.description = description;
     }
 
-    public String getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 }

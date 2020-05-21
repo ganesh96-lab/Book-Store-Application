@@ -1,8 +1,7 @@
-package com.bridgelabz.bookstore.Controller;
+package com.bridgelabz.bookstore.controller;
 
-import com.bridgelabz.bookstore.Model.Book;
-import com.bridgelabz.bookstore.Service.BookServiceImpl;
-import com.bridgelabz.bookstore.Service.IBookService;
+import com.bridgelabz.bookstore.model.Book;
+import com.bridgelabz.bookstore.service.IBookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +16,9 @@ public class BookStoreController {
     private IBookService bookService;
 
     @GetMapping("/feedBookdata")
-    public void setDataInDB(){
+    public String setDataInDB(){
         bookService.saveBookData();
+        return "record Inserted";
     }
 
     @GetMapping("/searchBook")
@@ -29,5 +29,15 @@ public class BookStoreController {
     @GetMapping("/showAllBooks")
     public ResponseEntity<List<Book>> showallBooks(){
         return new ResponseEntity<>(bookService.showAllBooks(), HttpStatus.OK);
+    }
+
+    @GetMapping("/sortAscByPrice")
+    public ResponseEntity<List<Book>> sortBooksByPriceAsc(){
+        return new ResponseEntity<>(bookService.sortBooksByPriceAsc(), HttpStatus.OK);
+    }
+
+    @GetMapping("/sortDescByPrice")
+    public ResponseEntity<List<Book>> sortByPriceDesc(){
+        return new ResponseEntity<>(bookService.sortBooksByPriceDesc(), HttpStatus.OK);
     }
 }

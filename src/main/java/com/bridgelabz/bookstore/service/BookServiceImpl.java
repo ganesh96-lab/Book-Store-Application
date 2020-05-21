@@ -1,7 +1,7 @@
-package com.bridgelabz.bookstore.Service;
+package com.bridgelabz.bookstore.service;
 
-import com.bridgelabz.bookstore.Model.Book;
-import com.bridgelabz.bookstore.Repository.BookRepository;
+import com.bridgelabz.bookstore.model.Book;
+import com.bridgelabz.bookstore.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,14 +21,16 @@ public class BookServiceImpl implements IBookService {
             BufferedReader bufferedReader = new BufferedReader(new FileReader("/home/ganesh/Community version/Book-Store-App/src/main/resources/books_data.csv"));
             bufferedReader.readLine();
             while ((line=bufferedReader.readLine())!=null){
-                System.out.println(line);
+               // System.out.println(line);
                 String data[]=line.split(",");
                 Book book=new Book();
                 book.setId(data[0]);
                 book.setAuthor(data[1]);
                 book.setTitle(data[2]);
                 book.setImage(data[3]);
-                book.setPrice(data[4]);
+                System.out.println("Price"+data[4]);
+                book.setPrice(Integer.parseInt(data[4]));
+                System.out.println("description"+data[5]);
                 book.setDescription(data[5]);
                 bookRepository.save(book);
             }
@@ -59,4 +61,15 @@ public class BookServiceImpl implements IBookService {
         }
         return bookList;
     }
+
+    @Override
+    public List<Book> sortBooksByPriceAsc() {
+        return bookRepository.findAllByOrderByPriceAsc();
+    }
+
+    @Override
+    public List<Book> sortBooksByPriceDesc() {
+        return bookRepository.findAllByOrderByPriceDesc();
+    }
+
 }

@@ -1,4 +1,4 @@
-package com.bridgelabz.bookstore.Model;
+package com.bridgelabz.bookstore.model;
 
 public class BookMarketStatus {
     private int availability;
