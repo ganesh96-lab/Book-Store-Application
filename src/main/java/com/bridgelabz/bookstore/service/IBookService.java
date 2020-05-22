@@ -10,8 +10,8 @@ import java.util.List;
 public interface IBookService {
      void saveBookData();
      Page<BookDto> searchBook(String searchBookString, Pageable pageable);
-     List<Book> showAllBooks();
-     List<Book> sortBooksByPriceAsc();
-     List<Book> sortBooksByPriceDesc();
-     List<Book> sortBooksByPublishDate();
+     Page<BookDto> showAllBooks(Pageable pageable);
+     Page<BookDto> sortBooksByPriceAsc(Pageable pageable);
+     Page<BookDto> sortBooksByPriceDesc(Pageable pageable);
+     Page<BookDto> sortBooksByPublishDate(Pageable pageable);
 }

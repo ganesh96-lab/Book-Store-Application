@@ -60,28 +60,31 @@ public class BookServiceImpl implements IBookService {
     }
 
     @Override
-    public List<Book> showAllBooks() {
+    public Page<BookDto> showAllBooks(Pageable pageable) {
         List<Book> bookList=new ArrayList<>();
         List<Book> allBooks = bookRepository.findAll();
         for (Book book:allBooks){
             bookList.add(book);
         }
-        return bookList;
+        return entityToDtoMapper.entityToDto(bookList,pageable);
     }
 
     @Override
-    public List<Book> sortBooksByPriceAsc() {
-        return bookRepository.findAllByOrderByPriceAsc();
+    public Page<BookDto> sortBooksByPriceAsc(Pageable pageable) {
+        List<Book> allByOrderByPriceAsc = bookRepository.findAllByOrderByPriceAsc();
+        return entityToDtoMapper.entityToDto(allByOrderByPriceAsc,pageable);
     }
 
     @Override
-    public List<Book> sortBooksByPriceDesc() {
-        return bookRepository.findAllByOrderByPriceDesc();
+    public Page<BookDto> sortBooksByPriceDesc(Pageable pageable) {
+        List<Book> allByOrderByPriceDesc = bookRepository.findAllByOrderByPriceDesc();
+        return entityToDtoMapper.entityToDto(allByOrderByPriceDesc,pageable);
     }
 
     @Override
-    public List<Book> sortBooksByPublishDate() {
-        return bookRepository.findAllByOrderByPublishDateDesc();
+    public Page<BookDto> sortBooksByPublishDate(Pageable pageable) {
+        List<Book> allByOrderByPublishDateDesc = bookRepository.findAllByOrderByPublishDateDesc();
+        System.out.println(allByOrderByPublishDateDesc);
+        return entityToDtoMapper.entityToDto(allByOrderByPublishDateDesc,pageable);
     }
-
 }

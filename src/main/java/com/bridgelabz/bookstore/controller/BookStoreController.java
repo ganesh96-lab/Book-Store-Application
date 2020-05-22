@@ -26,27 +26,27 @@ public class BookStoreController {
     }
 
     @GetMapping("/searchBook")
-    public ResponseEntity<Page<BookDto>> searchBook(@RequestParam String searchBookString,@PageableDefault(size=10) Pageable pageable){
+    public ResponseEntity<Page<BookDto>> searchBook(@RequestParam String searchBookString, @PageableDefault(size=10) Pageable pageable){
         return new ResponseEntity<>(bookService.searchBook(searchBookString,pageable), HttpStatus.OK);
     }
 
     @GetMapping("/showAllBooks")
-    public ResponseEntity<List<Book>> showallBooks(){
-        return new ResponseEntity<>(bookService.showAllBooks(), HttpStatus.OK);
+    public ResponseEntity<Page<BookDto>> showallBooks(@PageableDefault(size = 10) Pageable pageable){
+        return new ResponseEntity<>(bookService.showAllBooks(pageable), HttpStatus.OK);
     }
 
     @GetMapping("/sortAscByPrice")
-    public ResponseEntity<List<Book>> sortBooksByPriceAsc(){
-        return new ResponseEntity<>(bookService.sortBooksByPriceAsc(), HttpStatus.OK);
+    public ResponseEntity<Page<BookDto>> sortBooksByPriceAsc(@PageableDefault(size = 10) Pageable pageable){
+        return new ResponseEntity<>(bookService.sortBooksByPriceAsc(pageable), HttpStatus.OK);
     }
 
     @GetMapping("/sortDescByPrice")
-    public ResponseEntity<List<Book>> sortByPriceDesc(){
-        return new ResponseEntity<>(bookService.sortBooksByPriceDesc(), HttpStatus.OK);
+    public ResponseEntity<Page<BookDto>> sortByPriceDesc(@PageableDefault(size = 10) Pageable pageable){
+        return new ResponseEntity<>(bookService.sortBooksByPriceDesc(pageable), HttpStatus.OK);
     }
 
     @GetMapping("/sortBynewArrival")
-    public ResponseEntity<List<Book>> sortByPublishDate(){
-        return new ResponseEntity<>(bookService.sortBooksByPublishDate(), HttpStatus.OK);
+    public ResponseEntity<Page<BookDto>> sortByPublishDate(@PageableDefault(size = 10) Pageable pageable){
+        return new ResponseEntity<>(bookService.sortBooksByPublishDate(pageable), HttpStatus.OK);
     }
 }
