@@ -1,11 +1,15 @@
 package com.bridgelabz.bookstore.controller;
 
+import com.bridgelabz.bookstore.dto.BookDto;
 import com.bridgelabz.bookstore.model.Book;
 import com.bridgelabz.bookstore.service.IBookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -22,8 +26,8 @@ public class BookStoreController {
     }
 
     @GetMapping("/searchBook")
-    public ResponseEntity<List<Book>> searchBook(@RequestParam String searchBookString){
-        return new ResponseEntity<>(bookService.searchBook(searchBookString), HttpStatus.OK);
+    public ResponseEntity<Page<BookDto>> searchBook(@RequestParam String searchBookString,@PageableDefault(size=10) Pageable pageable){
+        return new ResponseEntity<>(bookService.searchBook(searchBookString,pageable), HttpStatus.OK);
     }
 
     @GetMapping("/showAllBooks")

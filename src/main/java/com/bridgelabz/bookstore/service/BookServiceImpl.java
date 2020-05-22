@@ -1,10 +1,13 @@
 package com.bridgelabz.bookstore.service;
 
+import com.bridgelabz.bookstore.dto.BookDto;
 import com.bridgelabz.bookstore.model.Book;
+import com.bridgelabz.bookstore.modelmapper.EntityToDtoMapper;
 import com.bridgelabz.bookstore.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -14,6 +17,8 @@ import java.util.List;
 
 @Service
 public class BookServiceImpl implements IBookService {
+    @Autowired
+    EntityToDtoMapper entityToDtoMapper;
     @Autowired
     private BookRepository bookRepository;
     public void saveBookData(){
@@ -42,7 +47,7 @@ public class BookServiceImpl implements IBookService {
     }
 
     @Override
-    public List<Book> searchBook(String searchBookString) {
+    public Page<BookDto> searchBook(String searchBookString, Pageable pageable) {
        List<Book> relatedBookList=new ArrayList<>();
        List<Book> bookList = bookRepository.findAll();
        for(Book book:bookList){
@@ -51,7 +56,7 @@ public class BookServiceImpl implements IBookService {
                relatedBookList.add(book);
            }
        }
-       return relatedBookList;
+       return entityToDtoMapper.entityToDto(relatedBookList,pageable);
     }
 
     @Override
