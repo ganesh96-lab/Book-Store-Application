@@ -27,7 +27,7 @@ public class BookStoreController {
 
     @GetMapping("/searchBook")
     public ResponseEntity<Page<BookDto>> searchBook(@RequestParam String searchBookString, @PageableDefault(size=10) Pageable pageable){
-        return new ResponseEntity<>(bookService.searchBook(searchBookString,pageable), HttpStatus.OK);
+        return new ResponseEntity<>(bookService.searchBook(searchBookString, pageable), HttpStatus.OK);
     }
 
     @GetMapping("/showAllBooks")

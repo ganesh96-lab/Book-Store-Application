@@ -13,7 +13,10 @@ public class Book {
     private String id;
     private String author;
     private String title;
+
+    @Column(length = 4000)
     private String image;
+
     @Column(length = 4000)
     private String description;
     private int price;
