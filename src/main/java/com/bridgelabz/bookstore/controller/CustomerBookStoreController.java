@@ -15,15 +15,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/book-store")
-public class BookStoreController {
+public class CustomerBookStoreController
+ {
     @Autowired
     private IBookService bookService;
-
-    @GetMapping("/feedBookdata")
-    public String setDataInDB(){
-        bookService.saveBookData();
-        return "record Inserted";
-    }
 
     @GetMapping("/searchBook")
     public ResponseEntity<Page<BookDto>> searchBook(@RequestParam String searchBookString, @PageableDefault(size=10) Pageable pageable){

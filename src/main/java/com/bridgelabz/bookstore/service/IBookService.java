@@ -8,7 +8,6 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface IBookService {
-     void saveBookData();
      Page<BookDto> searchBook(String searchBookString, Pageable pageable);
      Page<BookDto> showAllBooks(Pageable pageable);
      Page<BookDto> sortBooksByPriceAsc(Pageable pageable);

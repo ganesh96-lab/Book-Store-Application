@@ -8,14 +8,17 @@ import com.mysql.fabric.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 @RestController
 @RequestMapping("/book-store/admin")
-public class AdminController {
+public class AdminBookStoreController {
 
     @Autowired
     private IAdminService adminService;
@@ -24,5 +27,12 @@ public class AdminController {
     public String addSingleBook(@RequestBody Book book){
         adminService.addSingleBook(book);
         return "Single book record inserted";
+    }
+    @PostMapping("/uploadfile")
+    public String uploadFile(@RequestParam("selectFile") MultipartFile multipartFile ) throws IOException {
+        InputStream inputStream = multipartFile.getInputStream();
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        adminService.saveBookData(bufferedReader);
+        return "File uploaded and saved in db";
     }
 }
