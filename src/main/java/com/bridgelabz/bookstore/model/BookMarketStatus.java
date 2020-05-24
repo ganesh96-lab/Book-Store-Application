@@ -1,5 +1,4 @@
 package com.bridgelabz.bookstore.model;
-
 public class BookMarketStatus {
     private int availability;
     private int rating;
