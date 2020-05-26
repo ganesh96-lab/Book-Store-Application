@@ -28,6 +28,14 @@ public class AdminBookStoreController {
         adminService.addSingleBook(book);
         return "Single book record inserted";
     }
+
+/*    @DeleteMapping("/deleteRecord/{id}")
+    public String deleteBook(@PathVariable int id){
+        adminService.deleteBookById(id);
+        return "Deleted Successfully";
+    }*/
+
+
     @PostMapping("/uploadfile")
     public String uploadFile(@RequestParam("selectFile") MultipartFile multipartFile ) throws IOException {
         InputStream inputStream = multipartFile.getInputStream();
