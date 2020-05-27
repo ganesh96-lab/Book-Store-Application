@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import io.jsonwebtoken.*;
 import java.util.Date;
 
+//JwtUtils provides methods for generating, parsing, validating JWT
 @Component
 public class JwtUtils {
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);

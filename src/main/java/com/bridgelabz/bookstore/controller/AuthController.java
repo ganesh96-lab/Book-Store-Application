@@ -30,6 +30,10 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
+
+    //AuthenticationManager has a DaoAuthenticationProvider (with help of UserDetailsService & PasswordEncoder)
+    // to validate UsernamePasswordAuthenticationToken object. If successful, AuthenticationManager returns a fully
+    // populated Authentication object (including granted authorities).
     @Autowired
     AuthenticationManager authenticationManager;
 
@@ -99,13 +103,6 @@ public class AuthController {
                         Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(adminRole);
-
-                        break;
-                    case "mod":
-                        Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                        roles.add(modRole);
-
                         break;
                     default:
                         Role userRole = roleRepository.findByName(ERole.ROLE_USER)
