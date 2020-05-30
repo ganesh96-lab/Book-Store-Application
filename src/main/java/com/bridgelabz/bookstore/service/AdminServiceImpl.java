@@ -19,11 +19,19 @@ public class AdminServiceImpl implements IAdminService {
     public void addSingleBook(Book book) {
         bookRepository.save(book);
     }
-/*
+
     @Override
-    public void deleteBookById(int id) {
-        bookRepository.deleteBookById();
-    }*/
+    public String deleteBook(String id) {
+        bookRepository.deleteById(id);
+        return "Book deleted successfully" ;
+    }
+
+    @Override
+    public String updateBook(Book book) {
+        bookRepository.save(book);
+        return "record updated successfully";
+    }
+
 
     public void saveBookData(BufferedReader bufferedReader){
         String line="";

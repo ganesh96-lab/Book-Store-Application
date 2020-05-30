@@ -31,13 +31,16 @@ public class AdminBookStoreController {
         return "Single book record inserted";
     }
 
-/*    @DeleteMapping("/deleteRecord/{id}")
-    public String deleteBook(@PathVariable int id){
-        adminService.deleteBookById(id);
-        return "Deleted Successfully";
-    }*/
+    @DeleteMapping("/deletebook/{id}")
+    public ResponseEntity<String> deleteBook(@PathVariable String id) {
+        return new ResponseEntity<>(adminService.deleteBook(id), HttpStatus.OK);
+    }
 
-
+    @PutMapping("/updatebook")
+    public ResponseEntity<String> update(@RequestBody Book book){
+        return  new ResponseEntity<>(adminService.updateBook(book), HttpStatus.OK);
+    }
+    
     @PostMapping("/uploadfile")
     public String uploadFile(@RequestParam("selectFile") MultipartFile multipartFile ) throws IOException {
         InputStream inputStream = multipartFile.getInputStream();

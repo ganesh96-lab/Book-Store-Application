@@ -1,5 +1,6 @@
 package com.bridgelabz.bookstore.controller;
 
+import com.bridgelabz.bookstore.dto.UserDto;
 import com.bridgelabz.bookstore.model.ERole;
 import com.bridgelabz.bookstore.model.Role;
 import com.bridgelabz.bookstore.model.User;
@@ -11,8 +12,11 @@ import com.bridgelabz.bookstore.repository.RoleRepository;
 import com.bridgelabz.bookstore.repository.UserRepository;
 import com.bridgelabz.bookstore.service.UserDetailsImpl;
 import com.bridgelabz.bookstore.security.jwt.JwtUtils;
+import com.bridgelabz.bookstore.utility.Utility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -48,6 +52,13 @@ public class AuthController {
 
     @Autowired
     JwtUtils jwtUtils;
+
+
+    @Autowired
+    private Utility utility;
+
+    @Autowired
+    private JavaMailSenderImpl javaMailSender; // use JavaMailSender class
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
@@ -115,6 +126,7 @@ public class AuthController {
         user.setRoles(roles);
         userRepository.save(user);
 
+        javaMailSender.send(utility.verifyUserMail(signUpRequest.getEmail(),"hello","Ganesh"));
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
 }
