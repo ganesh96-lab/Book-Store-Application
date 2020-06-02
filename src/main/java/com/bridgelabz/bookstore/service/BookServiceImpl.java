@@ -2,24 +2,26 @@ package com.bridgelabz.bookstore.service;
 
 import com.bridgelabz.bookstore.dto.BookDto;
 import com.bridgelabz.bookstore.model.Book;
+import com.bridgelabz.bookstore.model.User;
 import com.bridgelabz.bookstore.modelmapper.EntityToDtoMapper;
 import com.bridgelabz.bookstore.repository.BookRepository;
+import com.bridgelabz.bookstore.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BookServiceImpl implements IBookService {
 
     @Autowired
-    EntityToDtoMapper entityToDtoMapper;
+    private UserRepository userRepository;
+
+    @Autowired
+    private EntityToDtoMapper entityToDtoMapper;
 
     @Autowired
     private BookRepository bookRepository;
@@ -65,4 +67,5 @@ public class BookServiceImpl implements IBookService {
         System.out.println(allByOrderByPublishDateDesc);
         return entityToDtoMapper.entityToDto(allByOrderByPublishDateDesc, pageable);
     }
+
 }

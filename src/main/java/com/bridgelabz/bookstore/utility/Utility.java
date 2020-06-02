@@ -9,11 +9,10 @@ public class Utility {
     public static SimpleMailMessage verifyUserMail(String email, String token, String link) {
         System.out.println(email+" "+token+" "+ link);
         SimpleMailMessage msg = new SimpleMailMessage();
+
         msg.setTo(email);     //send mail
-
-        msg.setSubject("testing"); //send message for user email account
-        msg.setText("hello"+(link+token));  //send token for  user email  account
+        msg.setSubject("Welcome to Book Store"); //send message for user email account
+        msg.setText("hello"+(link+token));  //send id for  user email  account
         return msg;
-
     }
 }

@@ -1,6 +1,5 @@
 package com.bridgelabz.bookstore.controller;
 
-import com.bridgelabz.bookstore.dto.UserDto;
 import com.bridgelabz.bookstore.model.ERole;
 import com.bridgelabz.bookstore.model.Role;
 import com.bridgelabz.bookstore.model.User;
@@ -10,12 +9,13 @@ import com.bridgelabz.bookstore.payload.response.JwtResponse;
 import com.bridgelabz.bookstore.payload.response.MessageResponse;
 import com.bridgelabz.bookstore.repository.RoleRepository;
 import com.bridgelabz.bookstore.repository.UserRepository;
+import com.bridgelabz.bookstore.service.IBookService;
 import com.bridgelabz.bookstore.service.UserDetailsImpl;
 import com.bridgelabz.bookstore.security.jwt.JwtUtils;
 import com.bridgelabz.bookstore.utility.Utility;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -39,23 +39,26 @@ public class AuthController {
     // to validate UsernamePasswordAuthenticationToken object. If successful, AuthenticationManager returns a fully
     // populated Authentication object (including granted authorities).
     @Autowired
-    AuthenticationManager authenticationManager;
+    private AuthenticationManager authenticationManager;
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    RoleRepository roleRepository;
+    private RoleRepository roleRepository;
 
     @Autowired
-    PasswordEncoder encoder;
+    private PasswordEncoder encoder;
 
     @Autowired
-    JwtUtils jwtUtils;
+    private JwtUtils jwtUtils;
 
 
     @Autowired
     private Utility utility;
+
+    @Autowired
+    private IBookService bookService;
 
     @Autowired
     private JavaMailSenderImpl javaMailSender; // use JavaMailSender class
@@ -68,7 +71,6 @@ public class AuthController {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
-
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(item -> item.getAuthority())
@@ -83,6 +85,13 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
+
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(signUpRequest.getUsername(), signUpRequest.getPassword()));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = jwtUtils.generateJwtToken(authentication);
+        System.out.println("hello"+jwt);
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
             return ResponseEntity
                     .badRequest()
@@ -126,7 +135,7 @@ public class AuthController {
         user.setRoles(roles);
         userRepository.save(user);
 
-        javaMailSender.send(utility.verifyUserMail(signUpRequest.getEmail(),"hello","Ganesh"));
+        javaMailSender.send(utility.verifyUserMail(signUpRequest.getEmail(), "Ganesh", "http://localhost:8080/api/auth/verifyuseraccount"));
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
 }

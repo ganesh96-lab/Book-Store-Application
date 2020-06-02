@@ -25,6 +25,8 @@ public class User {
     @Email
     private String email;
 
+    private boolean isVerified;
+
     @NotBlank
     @Size(max = 120)
     private String password;
@@ -82,5 +84,13 @@ public class User {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public boolean isVerified() {
+        return isVerified;
+    }
+
+    public void setVerified(boolean verified) {
+        isVerified = verified;
     }
 }
