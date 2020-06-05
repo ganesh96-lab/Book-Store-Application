@@ -10,4 +10,6 @@ public interface IBookService {
      Page<BookDto> sortBooksByPriceAsc(Pageable pageable);
      Page<BookDto> sortBooksByPriceDesc(Pageable pageable);
      Page<BookDto> sortBooksByPublishDate(Pageable pageable);
+
+    String verifyUserAccount(long userId);
 }
