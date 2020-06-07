@@ -147,7 +147,7 @@ public class AuthController {
         rabbitMqDto.setTo(user.getEmail());
         rabbitMqDto.setFrom("ganeshghodke783@gmail.com");
         rabbitMqDto.setSubject("Welcome to Book store, Thanks for registration");
-        rabbitMqDto.setBody("please click this link to verify your account "+ "http://localhost:8093/verifyuser/" + user.getId());
+        rabbitMqDto.setBody("click this link to verify your account "+ "http://localhost:8093/verifyuser/" + user.getId());
         rabbitMqUtilty.sendMessageToQueue(rabbitMqDto);
         //javaMailSender.send(simpleMailUtility.verifyUserMail(signUpRequest.getEmail(),  " http://localhost:8093/verifyuser/"+user.getId()));
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));

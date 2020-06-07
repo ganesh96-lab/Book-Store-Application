@@ -7,6 +7,7 @@ import com.bridgelabz.bookstore.modelmapper.EntityToDtoMapper;
 import com.bridgelabz.bookstore.repository.BookRepository;
 import com.bridgelabz.bookstore.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -27,12 +28,15 @@ public class BookServiceImpl implements IBookService {
     private BookRepository bookRepository;
 
     @Override
+    @Cacheable(key = "#searchBookString", value = "bookByAuthorAndTitle")
     public Page<BookDto> searchBook(String searchBookString, Pageable pageable) {
        List<Book> relatedBookList=new ArrayList<>();
        List<Book> bookList = bookRepository.findAll();
+        System.out.println("hii i am in searchbook");
        for(Book book:bookList){
            if(book.getTitle().toLowerCase().contains(searchBookString.toLowerCase()) ||
                    book.getAuthor().toLowerCase().contains(searchBookString.toLowerCase())){
+               System.out.println("data searched");
                relatedBookList.add(book);
            }
        }
