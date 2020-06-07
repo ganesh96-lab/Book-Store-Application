@@ -1,5 +1,6 @@
 package com.bridgelabz.bookstore.controller;
 
+import com.bridgelabz.bookstore.dto.RabbitMqDto;
 import com.bridgelabz.bookstore.model.ERole;
 import com.bridgelabz.bookstore.model.Role;
 import com.bridgelabz.bookstore.model.User;
@@ -12,12 +13,11 @@ import com.bridgelabz.bookstore.repository.UserRepository;
 import com.bridgelabz.bookstore.service.IBookService;
 import com.bridgelabz.bookstore.service.UserDetailsImpl;
 import com.bridgelabz.bookstore.security.jwt.JwtUtils;
-import com.bridgelabz.bookstore.utility.Utility;
+import com.bridgelabz.bookstore.utility.RabbitMqUtilty;
+import com.bridgelabz.bookstore.utility.SimpleMailUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.MailException;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -58,7 +58,7 @@ public class AuthController {
 
 
     @Autowired
-    private Utility utility;
+    private SimpleMailUtility simpleMailUtility;
 
     @Autowired
     private IBookService bookService;
@@ -66,15 +66,24 @@ public class AuthController {
     @Autowired
     private JavaMailSenderImpl javaMailSender; // use JavaMailSender class
 
+    @Autowired
+    private RabbitMqUtilty rabbitMqUtilty;
+
+    @Autowired
+    private RabbitMqDto rabbitMqDto;
+
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
         Optional<User> user = userRepository.findByUsername(loginRequest.getUsername());
+
         if (user.get().isVerified()) {
+
             SecurityContextHolder.getContext().setAuthentication(authentication);
             String jwt = jwtUtils.generateJwtToken(authentication);
+
             UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
             List<String> roles = userDetails.getAuthorities().stream()
                     .map(item -> item.getAuthority())
@@ -132,12 +141,15 @@ public class AuthController {
                 }
             });
         }
-
         user.setRoles(roles);
         userRepository.save(user);
 
-        javaMailSender.send(utility.verifyUserMail(signUpRequest.getEmail(),  " http://localhost:8093/verifyuser/"+user.getId()));
+        rabbitMqDto.setTo(user.getEmail());
+        rabbitMqDto.setFrom("ganeshghodke783@gmail.com");
+        rabbitMqDto.setSubject("Welcome to Book store, Thanks for registration");
+        rabbitMqDto.setBody("please click this link to verify your account "+ "http://localhost:8093/verifyuser/" + user.getId());
+        rabbitMqUtilty.sendMessageToQueue(rabbitMqDto);
+        //javaMailSender.send(simpleMailUtility.verifyUserMail(signUpRequest.getEmail(),  " http://localhost:8093/verifyuser/"+user.getId()));
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
-
 }
