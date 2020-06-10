@@ -1,12 +1,18 @@
 package com.bridgelabz.bookstore.payload.request;
+import java.io.Serializable;
 
 import javax.validation.constraints.NotBlank;
-public class LoginRequest {
+
+public class LoginRequest implements Serializable{
     @NotBlank
     private String username;
 
     @NotBlank
     private String password;
+    
+    public LoginRequest() {
+    	
+    }
 
     public LoginRequest(@NotBlank String username, @NotBlank String password) {
         this.username = username;
