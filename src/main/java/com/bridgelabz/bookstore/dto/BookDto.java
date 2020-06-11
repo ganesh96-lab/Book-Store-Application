@@ -1,11 +1,9 @@
 package com.bridgelabz.bookstore.dto;
 
 import javax.persistence.Column;
-
-import java.io.Serializable;
 import java.time.LocalDate;
 
-public class BookDto implements Serializable {
+public class BookDto {
     private String author;
     private String title;
     private String image;
