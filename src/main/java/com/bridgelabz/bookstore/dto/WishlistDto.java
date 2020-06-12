@@ -1,8 +1,7 @@
 package com.bridgelabz.bookstore.dto;
 
-import java.io.Serializable;
 
-public class WishlistDto implements Serializable {
+public class WishlistDto {
 
     private int userId;
     private int bookId;
@@ -10,6 +9,9 @@ public class WishlistDto implements Serializable {
     public WishlistDto(int userId, int bookId) {
         this.userId = userId;
         this.bookId = bookId;
+    }
+
+    public WishlistDto() {
     }
 
     public int getUserId() {
