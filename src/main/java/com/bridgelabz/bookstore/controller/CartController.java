@@ -24,7 +24,7 @@ public class CartController {
         return new ResponseEntity<String>(iCartService.removeFromCart(cartDto), HttpStatus.OK);
     }
     @GetMapping("/getall/{userId}")
-    public ResponseEntity<String> getAllBooksFromCart(@PathVariable int userId){
-        return new ResponseEntity<String>(iCartService.getAllBooksFromCart(userId), HttpStatus.OK);
+    public ResponseEntity getAllBooksFromCart(@PathVariable int userId){
+        return new ResponseEntity(iCartService.getAllBooksFromCart(userId), HttpStatus.OK);
     }
 }
