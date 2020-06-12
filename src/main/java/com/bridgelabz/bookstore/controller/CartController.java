@@ -5,10 +5,7 @@ import com.bridgelabz.bookstore.service.ICartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("home/user/cart")
@@ -25,5 +22,9 @@ public class CartController {
     @PutMapping("/remove")
     public ResponseEntity<String> removeFromCart(@RequestBody CartDto cartDto) {
         return new ResponseEntity<String>(iCartService.removeFromCart(cartDto), HttpStatus.OK);
+    }
+    @GetMapping("/getall/{userId}")
+    public ResponseEntity<String> getAllBooksFromCart(@PathVariable int userId){
+        return new ResponseEntity<String>(iCartService.getAllBooksFromCart(userId), HttpStatus.OK);
     }
 }

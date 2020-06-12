@@ -1,11 +1,16 @@
 package com.bridgelabz.bookstore.service;
 
 import com.bridgelabz.bookstore.dto.CartDto;
+import com.bridgelabz.bookstore.model.Book;
 import com.bridgelabz.bookstore.model.Cart;
 import com.bridgelabz.bookstore.modelmapper.EntityToDtoMapper;
+import com.bridgelabz.bookstore.repository.BookRepository;
 import com.bridgelabz.bookstore.repository.CartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class CartServiceImpl implements ICartService {
@@ -15,6 +20,9 @@ public class CartServiceImpl implements ICartService {
 
     @Autowired
     private CartRepository cartRepository;
+
+    @Autowired
+    private BookRepository bookRepository;
 
     @Override
     public String addToCart(CartDto cartDto) {
@@ -30,5 +38,15 @@ public class CartServiceImpl implements ICartService {
         Cart cart = entityToDtoMapper.convertToCartEntity(cartDto);
         cartRepository.deleteCartsByBookIdAndUserId(cart.getBookId(), cart.getUserId());
         return "Book Removed Successfully";
+    }
+
+    @Override
+    public List<Book> getAllBooksFromCart(int userId) {
+        List<Book> cartBooks=new ArrayList<>();
+        List<Cart> allByUserId = cartRepository.findAllByUserId(userId);
+        for(Cart cart  : allByUserId){
+            cartBooks.add(bookRepository.findById(cart.getBookId()));
+        }
+        return cartBooks;
     }
 }
