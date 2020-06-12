@@ -1,6 +1,8 @@
 package com.bridgelabz.bookstore.dto;
 
-public class WishlistDto {
+import java.io.Serializable;
+
+public class WishlistDto implements Serializable {
 
     private int userId;
     private int bookId;

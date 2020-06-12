@@ -2,8 +2,10 @@ package com.bridgelabz.bookstore.modelmapper;
 
 import com.bridgelabz.bookstore.dto.BookDto;
 import com.bridgelabz.bookstore.dto.CartDto;
+import com.bridgelabz.bookstore.dto.WishlistDto;
 import com.bridgelabz.bookstore.model.Book;
 import com.bridgelabz.bookstore.model.Cart;
+import com.bridgelabz.bookstore.model.Wishlist;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -37,5 +39,13 @@ public class EntityToDtoMapper{
 
     public Cart convertToCartEntity(CartDto cartDto) {
         return modelMapper.map(cartDto, Cart.class);
+    }
+
+    public WishlistDto converToWishlistDto(Wishlist wishlist) {
+        return modelMapper.map(wishlist, WishlistDto.class);
+    }
+
+    public Wishlist convertToWishlistEntity(WishlistDto wishlistDto) {
+        return modelMapper.map(wishlistDto, Wishlist.class);
     }
 }
