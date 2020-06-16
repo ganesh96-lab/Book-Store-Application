@@ -18,4 +18,9 @@ public class UserService implements IUserService{
         System.out.println("Getting data from db:"+userList);
         return userList;
     }
+
+    @Override
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
+    }
 }
