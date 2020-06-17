@@ -4,6 +4,7 @@ import com.bridgelabz.bookstore.dto.BookDto;
 import com.bridgelabz.bookstore.model.Book;
 import com.bridgelabz.bookstore.service.IBookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,7 @@ public class CustomerBookStoreController
     private IBookService bookService;
 
     @GetMapping("/searchBook")
+    @Cacheable(key = "#searchBookString", value = "bookByAuthorAndTitle")
     public ResponseEntity<Page<BookDto>> searchBook(@RequestParam String searchBookString, @PageableDefault(size=10) Pageable pageable){
         return new ResponseEntity<>(bookService.searchBook(searchBookString, pageable), HttpStatus.OK);
     }

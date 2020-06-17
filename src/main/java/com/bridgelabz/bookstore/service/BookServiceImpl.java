@@ -28,7 +28,6 @@ public class BookServiceImpl implements IBookService {
     private BookRepository bookRepository;
 
     @Override
-    @Cacheable(key = "#searchBookString", value = "bookByAuthorAndTitle")
     public Page<BookDto> searchBook(String searchBookString, Pageable pageable) {
        List<Book> relatedBookList=new ArrayList<>();
        List<Book> bookList = bookRepository.findAll();

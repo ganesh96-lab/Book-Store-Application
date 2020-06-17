@@ -27,7 +27,7 @@ public class User {
 
     private boolean isVerified;
 
-    @NotBlank
+    @NotBlank(message = "Password shouldn't be blank")
     @Size(max = 120)
     private String password;
 

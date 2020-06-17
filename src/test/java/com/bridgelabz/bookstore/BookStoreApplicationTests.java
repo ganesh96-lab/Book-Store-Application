@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 //@RunWith(SpringRunner.class)
-@RunWith(SpringJUnit4ClassRunner.class.class)
+@RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
 class BookStoreApplicationTests {
 
@@ -34,7 +34,6 @@ class BookStoreApplicationTests {
 	private UserRepository userRepository;
 
 	private MockMvc mockMvc;
-
 
 
 	@Test
