@@ -1,11 +1,15 @@
 package com.bridgelabz.bookstore.utility;
 
 import com.bridgelabz.bookstore.dto.RabbitMqDto;
+import com.bridgelabz.bookstore.model.User;
+import com.bridgelabz.bookstore.service.MessageReference;
+
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.access.event.PublicInvocationEvent;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -40,4 +44,25 @@ public class RabbitMqUtilty {
     public void receiveMessage(RabbitMqDto email) {
         send(email);
     }
+    
+    public static RabbitMqDto getRabbitMq(String email, String token) {
+    	
+    	RabbitMqDto rabbitMqDto = new RabbitMqDto();
+    	rabbitMqDto.setBody(MessageReference.REGISTRATION_MAIL_TEXT+token);
+    	rabbitMqDto.setTo(email);
+    	rabbitMqDto.setSubject("verification link");
+		return rabbitMqDto;
+    	
+    }
+    
+    public static SimpleMailMessage verifyUserMail(String email, String token, String link){
+    	
+    	SimpleMailMessage msg = new SimpleMailMessage();
+		msg.setTo(email); 
+		msg.setSubject("test"); //send message for user email account
+		msg.setText("hello"+(link+token));  //send token for  user email  account
+		System.out.println("in simple mail :"+ email);
+    	return msg;
+    }
+    
 }

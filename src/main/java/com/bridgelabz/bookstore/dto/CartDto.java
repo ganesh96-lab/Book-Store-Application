@@ -1,12 +1,20 @@
 package com.bridgelabz.bookstore.dto;
 
+import java.io.Serializable;
+
 public class CartDto {
 
     private int userId;
     private int bookId;
     private int bookQuantity;
+    
 
-    public CartDto(int userId, int bookId, int bookQuantity) {
+    public CartDto() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public CartDto(int userId, int bookId, int bookQuantity) {
         this.userId = userId;
         this.bookId = bookId;
         this.bookQuantity = bookQuantity;
