@@ -32,9 +32,12 @@ return token;
 * @return userId got after parsing
 */
 public long getUserIdFromToken(String token) {
+	System.out.println("11");
 Claims claim = Jwts.parser().setSigningKey("userId").parseClaimsJws(token).getBody();
+System.out.println("jwt11");
 String userIdString = claim.getSubject();
 long userId = Long.parseLong(userIdString);
+System.out.println(userId);
 return userId;
 }
 

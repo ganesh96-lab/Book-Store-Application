@@ -10,14 +10,14 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface CartRepository extends JpaRepository<Cart, Integer> {
-    boolean existsCartByUserId(int userId);
+    boolean existsCartByUserId(long userId);
     boolean existsCartByBookId(int bookId);
 
-    List<Cart> findAllByUserId(int userId);
+    List<Cart> findAllByUserId(long userId);
 
     @Modifying
     @Transactional
     @Query("DELETE FROM Cart cart WHERE cart.bookId = :bookId AND cart.userId = :userId")
-    void deleteCartsByBookIdAndUserId(@Param("bookId") int bookId, @Param("userId") int userId);
+    void deleteCartsByBookIdAndUserId(@Param("bookId") String bookId, @Param("userId") long userId);
 
 }

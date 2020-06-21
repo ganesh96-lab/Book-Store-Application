@@ -12,7 +12,7 @@ public class Wishlist {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private int userId;
-    private int bookId;
+    private String bookId;
 
     public Wishlist() {
     }
@@ -25,11 +25,12 @@ public class Wishlist {
         this.userId = userId;
     }
 
-    public int getBookId() {
-        return bookId;
-    }
+	public String getBookId() {
+		return bookId;
+	}
 
-    public void setBookId(int bookId) {
-        this.bookId = bookId;
-    }
+	public void setBookId(String bookId) {
+		this.bookId = bookId;
+	}
+
 }

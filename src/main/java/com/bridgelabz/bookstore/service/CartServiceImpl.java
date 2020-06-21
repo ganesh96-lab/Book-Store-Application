@@ -6,6 +6,9 @@ import com.bridgelabz.bookstore.model.Cart;
 import com.bridgelabz.bookstore.modelmapper.EntityToDtoMapper;
 import com.bridgelabz.bookstore.repository.BookRepository;
 import com.bridgelabz.bookstore.repository.CartRepository;
+import com.bridgelabz.bookstore.security.jwt.JwtUtils;
+import com.bridgelabz.bookstore.utility.Tokenutility;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,32 +26,52 @@ public class CartServiceImpl implements ICartService {
 
     @Autowired
     private BookRepository bookRepository;
+    
+    @Autowired
+    private Tokenutility tokenutility;
+    
+    @Autowired
+    private JwtUtils jwtUtils;
 
     @Override
-    public String addToCart(CartDto cartDto) {
+    public String addToCart(CartDto cartDto, String token) {
+    	
+    	System.out.println("0");
+    	System.out.println(token);
+    	long userId = (int)(jwtUtils.getUserIdFromJwtToken(token));
+    	System.out.println("1");
         Cart cart = entityToDtoMapper.convertToCartEntity(cartDto);
-        if (cartRepository.existsCartByUserId(cart.getUserId()) && cartRepository.existsCartByBookId(cart.getBookId()))
-            cartRepository.deleteCartsByBookIdAndUserId(cart.getBookId(), cart.getUserId());
+        cart.setUserId(userId);
+		/*
+		 * if (cartRepository.existsCartByUserId(userId) &&
+		 * cartRepository.existsCartByBookId(bookId))
+		 * cartRepository.deleteCartsByBookIdAndUserId(cart.getBookId(),
+		 * cart.getUserId());
+		 */
+        System.out.println("2");
         cartRepository.save(cart);
         return "Added to cart";
     }
 
     @Override
-    public String removeFromCart(CartDto cartDto) {
+    public String removeFromCart(CartDto cartDto, String token) {
+    	
+    	long userId = (jwtUtils.getUserIdFromJwtToken(token));
         Cart cart = entityToDtoMapper.convertToCartEntity(cartDto);
-        cartRepository.deleteCartsByBookIdAndUserId(cart.getBookId(), cart.getUserId());
+        cartRepository.deleteCartsByBookIdAndUserId(cart.getBookId(), userId);
         return "Book Removed Successfully";
     }
 
     @Override
-    public List<Book> getAllBooksFromCart(int userId) {
+    public List<Book> getAllBooksFromCart(String token) {
+    	long userId = (int)(jwtUtils.getUserIdFromJwtToken(token));
         List<Book> cartBooks=new ArrayList<>();
 	        List<Cart> allByUserId = cartRepository.findAllByUserId(userId);
 	        System.out.println(allByUserId);
 	        for(Cart cart  : allByUserId){
 	            if(cart.getBookQuantity() == 0)
 	                cartRepository.deleteCartsByBookIdAndUserId(cart.getBookId(), cart.getUserId());
-	            cartBooks.add(bookRepository.findById(cart.getBookId()));
+	            cartBooks.add(bookRepository.findById(cart.getBookId()).get());
 	        }
       
         return cartBooks;

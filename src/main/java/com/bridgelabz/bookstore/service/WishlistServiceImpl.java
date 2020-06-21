@@ -50,7 +50,7 @@ public class WishlistServiceImpl implements IWishlistService  {
         List<Book> wishlistBooks = new ArrayList<>();
         List<Wishlist> allByUserId = wishlistRepository.findAllByUserId(userId);
         for (Wishlist wishlist : allByUserId){
-            wishlistBooks.add(bookRepository.findById(wishlist.getBookId()));
+            wishlistBooks.add(bookRepository.findById(wishlist.getBookId()).get());
         }
         return wishlistBooks;
     }

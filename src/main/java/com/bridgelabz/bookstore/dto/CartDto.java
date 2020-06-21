@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class CartDto {
 
-    private int userId;
+   // private int userId;
     private int bookId;
     private int bookQuantity;
     
@@ -15,18 +15,16 @@ public class CartDto {
 	}
 
 	public CartDto(int userId, int bookId, int bookQuantity) {
-        this.userId = userId;
+       // this.userId = userId;
         this.bookId = bookId;
         this.bookQuantity = bookQuantity;
     }
 
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
+	/*
+	 * public int getUserId() { return userId; }
+	 * 
+	 * public void setUserId(int userId) { this.userId = userId; }
+	 */
 
     public int getBookId() {
         return bookId;

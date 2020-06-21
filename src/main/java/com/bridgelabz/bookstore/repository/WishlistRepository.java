@@ -12,11 +12,11 @@ import java.util.List;
 
 public interface WishlistRepository extends JpaRepository<Wishlist, Integer> {
     boolean existsWishlistByUserId(int userId);
-    boolean existsWishlistByBookId(int bookId);
+    boolean existsWishlistByBookId(String bookId);
     List<Wishlist> findAllByUserId(int userId);
 
     @Modifying
     @Transactional
     @Query("DELETE FROM Wishlist wishlist WHERE wishlist.bookId = :bookId AND wishlist.userId = :userId")
-    void deleteWishlistByBookIdAndUserId(@Param("bookId") int bookId, @Param("userId") int userId);
+    void deleteWishlistByBookIdAndUserId(@Param("bookId") String bookId, @Param("userId") int userId);
 }
