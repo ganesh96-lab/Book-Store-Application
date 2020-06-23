@@ -1,12 +1,6 @@
 package com.bridgelabz.bookstore.utility;
 
-import java.util.Date;
-
 import org.springframework.stereotype.Component;
-
-import com.bridgelabz.bookstore.exception.Tokenexception;
-import com.bridgelabz.bookstore.service.MessageReference;
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

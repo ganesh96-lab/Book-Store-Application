@@ -1,6 +1,5 @@
 package com.bridgelabz.bookstore.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -26,6 +25,9 @@ public class OrderBookDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long orderId = 10000;
     
     @ManyToOne
     private User user;
@@ -34,6 +36,7 @@ public class OrderBookDetails {
     private List<Cart> bookList ;
     
     private int totalPrice;
+    
 	/*
 	 * public int orderId; public int bookIds; public int bookQuantity; public
 	 * Double orderPrice; public String customerName; public String mobileNo; public
@@ -65,9 +68,18 @@ public class OrderBookDetails {
 		this.totalPrice = totalPrice;
 	}
 
+	public long getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(long orderId) {
+		this.orderId = orderId;
+	}
+
 	@Override
 	public String toString() {
 		return "OrderBookDetails [id=" + id + ", user=" + user + ", bookList=" + bookList + ", totalPrice=" + totalPrice
-				+ "]";
+				+ ", orderId=" + orderId + "]";
 	}
+
 }

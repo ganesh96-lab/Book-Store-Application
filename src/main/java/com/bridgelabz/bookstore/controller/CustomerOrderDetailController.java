@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bridgelabz.bookstore.dto.OrderBookDetailDTO;
 import com.bridgelabz.bookstore.exception.BookStoreException;
 import com.bridgelabz.bookstore.service.IUserOrderSummary;
+import com.bridgelabz.bookstore.service.MessageReference;
 
 @RestController
 @RequestMapping("/bookstore")
@@ -23,8 +24,7 @@ public class CustomerOrderDetailController {
 	@GetMapping("/placeorder")
 	public String PlaceOrder(@RequestHeader String token){
 		userOrderSummary.placeOrder(token);
-		return "Order Placed successfully";
-		
+		return MessageReference.ORDER_PLACED;
 	}
 
 }

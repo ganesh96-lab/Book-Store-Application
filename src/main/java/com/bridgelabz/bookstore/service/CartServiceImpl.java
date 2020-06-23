@@ -59,7 +59,7 @@ public class CartServiceImpl implements ICartService {
     	long userId = (jwtUtils.getUserIdFromJwtToken(token));
         Cart cart = entityToDtoMapper.convertToCartEntity(cartDto);
         cartRepository.deleteCartsByBookIdAndUserId(cart.getBookId(), userId);
-        return "Book Removed Successfully";
+        return MessageReference.Book_Removed;
     }
 
     @Override

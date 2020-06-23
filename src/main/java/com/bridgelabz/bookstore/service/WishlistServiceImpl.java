@@ -35,14 +35,14 @@ public class WishlistServiceImpl implements IWishlistService  {
         if(wishlistRepository.existsWishlistByBookId(wishlist.getBookId()) && wishlistRepository.existsWishlistByUserId(wishlist.getUserId()))
             wishlistRepository.deleteWishlistByBookIdAndUserId(wishlist.getBookId(), wishlist.getUserId());
         wishlistRepository.save(wishlist);
-        return "Added to Wishlist successfully";
+        return MessageReference.ADDED_WISHLIST;
     }
 
     @Override
     public String removeFromWishlist(WishlistDto wishlistDto) {
         Wishlist wishlist = entityToDtoMapper.convertToWishlistEntity(wishlistDto);
         wishlistRepository.deleteWishlistByBookIdAndUserId(wishlist.getBookId(), wishlist.getUserId());
-        return "Removed from Wishlist successfully";
+        return MessageReference.REMOVE_FROM_WISHLIST;
     }
 
     @Override

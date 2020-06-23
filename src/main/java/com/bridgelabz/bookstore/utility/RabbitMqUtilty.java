@@ -1,6 +1,6 @@
 package com.bridgelabz.bookstore.utility;
 
-import com.bridgelabz.bookstore.dto.RabbitMqDto;
+import com.bridgelabz.bookstore.dto.EmailDto;
 import com.bridgelabz.bookstore.model.User;
 import com.bridgelabz.bookstore.service.MessageReference;
 
@@ -22,14 +22,14 @@ public class RabbitMqUtilty {
     private JavaMailSender javaMailSender;
 
     //producer
-    public void sendMessageToQueue(RabbitMqDto rabbitMqDto){
+    public void sendMessageToQueue(EmailDto rabbitMqDto){
         final String exchange = "rabbitExchange";
         final String routingKey = "rabbitKey";
         System.out.println("hello");
         rabbitTemplate.convertAndSend(exchange, routingKey, rabbitMqDto);
     }
 
-    public void send(RabbitMqDto email){
+    public void send(EmailDto email){
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(email.getTo());
         message.setFrom(email.getFrom());
@@ -41,13 +41,13 @@ public class RabbitMqUtilty {
 
     //listener
     @RabbitListener(queues = "${spring.rabbitmq.template.default-receive-queue}")
-    public void receiveMessage(RabbitMqDto email) {
+    public void receiveMessage(EmailDto email) {
         send(email);
     }
     
-    public static RabbitMqDto getRabbitMq(String email, String token) {
+    public static EmailDto getRabbitMq(String email, String token) {
     	
-    	RabbitMqDto rabbitMqDto = new RabbitMqDto();
+    	EmailDto rabbitMqDto = new EmailDto();
     	rabbitMqDto.setBody(MessageReference.REGISTRATION_MAIL_TEXT+token);
     	rabbitMqDto.setTo(email);
     	rabbitMqDto.setSubject("verification link");

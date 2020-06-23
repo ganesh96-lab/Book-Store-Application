@@ -76,7 +76,7 @@ public class BookServiceImpl implements IBookService {
         Optional<User> user = userRepository.findById(userId);
         user.get().setVerified(true);
         userRepository.save(user.get());
-        return "Congratulation account is verified";
+        return MessageReference.VERIFIED_ACCOUNT;
     }
 
 }

@@ -19,7 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.bridgelabz.bookstore.config.Passwordconfig;
-import com.bridgelabz.bookstore.dto.RabbitMqDto;
+import com.bridgelabz.bookstore.dto.EmailDto;
 import com.bridgelabz.bookstore.dto.Setpassworddto;
 import com.bridgelabz.bookstore.exception.Forgotpasswordexception;
 import com.bridgelabz.bookstore.exception.Tokenexception;
@@ -75,7 +75,7 @@ public class AuthenticateUserServiceImpl implements IAuthenticateUserService {
     private RabbitMqUtilty rabbitMqUtilty;
 
     @Autowired
-    private RabbitMqDto rabbitMqDto;
+    private EmailDto rabbitMqDto;
     
     
     
@@ -176,10 +176,10 @@ public Response findEmail(String email) {
 	}else {
 		
 		String token = tokenutility.createToken(user.getId());
-		RabbitMqDto rabbitMqDto = RabbitMqUtilty.getRabbitMq(email, token);
+		EmailDto rabbitMqDto = RabbitMqUtilty.getRabbitMq(email, token);
 		template.convertAndSend("userMessageQueue", rabbitMqDto);
 		javaMailSender.send(RabbitMqUtilty.verifyUserMail(email, token, MessageReference.Verfiy_MAIL_TEXT+user.getId())); // send email
-		return new Response(400, "user  email found",token);
+		return new Response(400, "user  email found", token);
 		}	
 	}
 
@@ -229,7 +229,7 @@ public Response valivateUser(String token) {
 		userRepository.save(user);
 		return new Response(200, MessageReference.EMAIL_VERFIY, true);
 	} else {
-		return new Response(200,  MessageReference.NOT_VERFIY_EMAIL,false);
+		return new Response(200,  MessageReference.NOT_VERFIY_EMAIL, false);
 
 	}
 

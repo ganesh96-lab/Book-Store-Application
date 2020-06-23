@@ -23,13 +23,13 @@ public class AdminServiceImpl implements IAdminService {
     @Override
     public String deleteBook(String id) {
         bookRepository.deleteById(id);
-        return "Book deleted successfully" ;
+        return MessageReference.RECORD_DELETED ;
     }
 
     @Override
     public String updateBook(Book book) {
         bookRepository.save(book);
-        return "record updated successfully";
+        return MessageReference.RECORD_UPDATED;
     }
 
 

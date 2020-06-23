@@ -1,10 +1,5 @@
 package com.bridgelabz.bookstore.response;
 
-import java.io.Serializable;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-
 
 public class Response {
 	
