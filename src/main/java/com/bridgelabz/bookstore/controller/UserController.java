@@ -2,6 +2,7 @@ package com.bridgelabz.bookstore.controller;
 
 import com.bridgelabz.bookstore.model.User;
 import com.bridgelabz.bookstore.service.IUserService;
+import com.bridgelabz.bookstore.service.MessageReference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +26,6 @@ public class UserController {
     @DeleteMapping("/remove/{id}")
     public String deleteUser(@PathVariable Long id){
         userService.deleteUser(id);
-        return "user deleted where id is : "+id;
+        return MessageReference.DELETE_USER +id;
     }
 }

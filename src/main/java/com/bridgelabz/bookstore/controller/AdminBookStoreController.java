@@ -4,6 +4,7 @@ import com.bridgelabz.bookstore.dto.BookDto;
 import com.bridgelabz.bookstore.model.Book;
 import com.bridgelabz.bookstore.service.IAdminService;
 import com.bridgelabz.bookstore.service.IBookService;
+import com.bridgelabz.bookstore.service.MessageReference;
 import com.mysql.fabric.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,7 +29,7 @@ public class AdminBookStoreController {
     @PostMapping("/addbook")
     public String addSingleBook(@RequestBody Book book){
         adminService.addSingleBook(book);
-        return "Single book record inserted";
+        return MessageReference.UPLOADED_SINGLE_BOOK;
     }
 
     @DeleteMapping("/deletebook/{id}")
@@ -46,6 +47,6 @@ public class AdminBookStoreController {
         InputStream inputStream = multipartFile.getInputStream();
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         adminService.saveBookData(bufferedReader);
-        return "File uploaded and saved in db";
+        return MessageReference.FILE_UPLOADED;
     }
 }

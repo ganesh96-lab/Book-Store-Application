@@ -76,9 +76,7 @@ public class AuthenticateUserServiceImpl implements IAuthenticateUserService {
 
     @Autowired
     private EmailDto rabbitMqDto;
-    
-    
-    
+
     @Autowired
     private RabbitTemplate template;
     
@@ -112,7 +110,6 @@ public class AuthenticateUserServiceImpl implements IAuthenticateUserService {
         }
     }
 
-   
    @Override
     public ResponseEntity registerUser( SignupRequest signUpRequest) {
 
@@ -183,7 +180,6 @@ public Response findEmail(String email) {
 		}	
 	}
 
-
 @Override
 public Response setPassword(Setpassworddto setpassworddto, String token) {
 	
@@ -197,7 +193,6 @@ public Response setPassword(Setpassworddto setpassworddto, String token) {
 	System.out.println(updatedUser);
 	
 	if(setpassworddto.getPassword().equals(setpassworddto.getCfmpassword())) {
-		
 		System.out.println(setpassworddto);
 		updatedUser.setPassword(passwordconfig.encoder().encode(setpassworddto.getPassword()));
 		updateuserByEmail(updatedUser, email);
@@ -206,9 +201,7 @@ public Response setPassword(Setpassworddto setpassworddto, String token) {
 		System.out.println("3");
 		return new Response(200, MessageReference.PASSWORD_IS_NOT_MATCHING, true);
 	}
-	
 }
-
 
 public String updateuserByEmail(User user, String email) {
 	User updatedUser = userRepository.findByEmail(email);
@@ -230,9 +223,6 @@ public Response valivateUser(String token) {
 		return new Response(200, MessageReference.EMAIL_VERFIY, true);
 	} else {
 		return new Response(200,  MessageReference.NOT_VERFIY_EMAIL, false);
-
 	}
-
 }
-
 }

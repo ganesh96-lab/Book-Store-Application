@@ -17,4 +17,7 @@ public class MessageReference {
 	public static final String Book_Removed = "Book Removed Successfully";
 	public static final String ADDED_WISHLIST = "Added to Wishlist successfully";
 	public static final String REMOVE_FROM_WISHLIST = "Removed from Wishlist successfully";
+    public static final String FILE_UPLOADED = "File uploaded and saved in db";
+	public static final String UPLOADED_SINGLE_BOOK = "Single book record inserted";
+	public static final String DELETE_USER = "user deleted where id is : ";
 }
