@@ -5,7 +5,6 @@ import com.bridgelabz.bookstore.model.Book;
 import com.bridgelabz.bookstore.service.IAdminService;
 import com.bridgelabz.bookstore.service.IBookService;
 import com.bridgelabz.bookstore.service.MessageReference;
-import com.mysql.fabric.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

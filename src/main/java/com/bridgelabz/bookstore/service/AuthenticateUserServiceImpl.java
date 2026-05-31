@@ -176,7 +176,7 @@ public Response findEmail(String email) {
 		EmailDto rabbitMqDto = RabbitMqUtilty.getRabbitMq(email, token);
 		template.convertAndSend("userMessageQueue", rabbitMqDto);
 		javaMailSender.send(RabbitMqUtilty.verifyUserMail(email, token, MessageReference.Verfiy_MAIL_TEXT+user.getId())); // send email
-		return new Response(400, "user  email found", token);
+		return new Response(200, "user  email found", token);
 		}	
 	}
 
