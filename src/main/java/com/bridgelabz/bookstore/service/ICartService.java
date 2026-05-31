@@ -1,7 +1,7 @@
 package com.bridgelabz.bookstore.service;
 
 import com.bridgelabz.bookstore.dto.CartDto;
-import com.bridgelabz.bookstore.model.Book;
+import com.bridgelabz.bookstore.dto.CartResponseDto;
 
 import java.util.List;
 
@@ -10,5 +10,11 @@ public interface ICartService {
 
     String removeFromCart(CartDto cartDto, String token);
 
-    List<Book> getAllBooksFromCart(String token);
+    List<CartResponseDto> getAllBooksFromCart(String token);
+
+    String updateCartQuantity(CartDto cartDto, String token);
+
+    String clearCart(String token);
+
+    int getCartItemCount(String token);
 }

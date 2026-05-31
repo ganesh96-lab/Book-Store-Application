@@ -11,4 +11,9 @@ public class UserExceptionHandler {
     private ResponseEntity UserExceptionHandler(UserException userException){
         return new ResponseEntity(userException.getMessage(), HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(BookStoreException.class)
+    private ResponseEntity BookStoreExceptionHandler(BookStoreException bookStoreException){
+        return new ResponseEntity(bookStoreException.getMessage(), HttpStatus.BAD_REQUEST);
+    }
 }
