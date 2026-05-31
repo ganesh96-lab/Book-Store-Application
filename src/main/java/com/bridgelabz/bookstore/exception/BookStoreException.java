@@ -1,10 +1,12 @@
 package com.bridgelabz.bookstore.exception;
 
-public class BookStoreException extends RuntimeException{
+public class BookStoreException extends RuntimeException {
 
 	public BookStoreException() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
+	public BookStoreException(String message) {
+		super(message);
+	}
 }
