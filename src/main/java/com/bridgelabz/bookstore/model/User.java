@@ -44,7 +44,7 @@ public class User {
         this.username = username;
         this.email = email;
         this.password = password;
-        this.isVerified = isVerified;
+        this.isVerified = false;
     }
 
     public Long getId() {

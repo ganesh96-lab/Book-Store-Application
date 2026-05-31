@@ -36,10 +36,7 @@ public class CartServiceImpl implements ICartService {
     @Override
     public String addToCart(CartDto cartDto, String token) {
     	
-    	System.out.println("0");
-    	System.out.println(token);
-    	long userId = (int)(jwtUtils.getUserIdFromJwtToken(token));
-    	System.out.println("1");
+    	long userId = jwtUtils.getUserIdFromJwtToken(token);
         Cart cart = entityToDtoMapper.convertToCartEntity(cartDto);
         cart.setUserId(userId);
 		/*
@@ -48,7 +45,6 @@ public class CartServiceImpl implements ICartService {
 		 * cartRepository.deleteCartsByBookIdAndUserId(cart.getBookId(),
 		 * cart.getUserId());
 		 */
-        System.out.println("2");
         cartRepository.save(cart);
         return "Added to cart";
     }
@@ -64,14 +60,15 @@ public class CartServiceImpl implements ICartService {
 
     @Override
     public List<Book> getAllBooksFromCart(String token) {
-    	long userId = (int)(jwtUtils.getUserIdFromJwtToken(token));
+    	long userId = jwtUtils.getUserIdFromJwtToken(token);
         List<Book> cartBooks=new ArrayList<>();
 	        List<Cart> allByUserId = cartRepository.findAllByUserId(userId);
-	        System.out.println(allByUserId);
 	        for(Cart cart  : allByUserId){
-	            if(cart.getBookQuantity() == 0)
+	            if(cart.getBookQuantity() == 0) {
 	                cartRepository.deleteCartsByBookIdAndUserId(cart.getBookId(), cart.getUserId());
-	            cartBooks.add(bookRepository.findById(cart.getBookId()).get());
+	            } else {
+	                cartBooks.add(bookRepository.findById(cart.getBookId()).get());
+	            }
 	        }
       
         return cartBooks;

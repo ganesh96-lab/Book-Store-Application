@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("home/user/cart")
+@RequestMapping("/home/user/cart")
 public class CartController {
 
     @Autowired
@@ -16,7 +16,6 @@ public class CartController {
 
     @PutMapping("/add")
     public ResponseEntity<String> addToCart(@RequestBody CartDto cartDto, @RequestHeader String token) {
-    	System.out.println(token);
         return new ResponseEntity<String>(iCartService.addToCart(cartDto, token), HttpStatus.OK);
     }
 
