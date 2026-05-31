@@ -1,36 +1,29 @@
 package com.bridgelabz.bookstore.dto;
 
-import java.io.Serializable;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 public class CartDto {
 
-   // private int userId;
-    private int bookId;
+    @NotNull(message = "Book ID is required")
+    private String bookId;
+
+    @Min(value = 1, message = "Book quantity must be at least 1")
     private int bookQuantity;
-    
 
     public CartDto() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+    }
 
-	public CartDto(int userId, int bookId, int bookQuantity) {
-       // this.userId = userId;
+    public CartDto(String bookId, int bookQuantity) {
         this.bookId = bookId;
         this.bookQuantity = bookQuantity;
     }
 
-	/*
-	 * public int getUserId() { return userId; }
-	 * 
-	 * public void setUserId(int userId) { this.userId = userId; }
-	 */
-
-    public int getBookId() {
+    public String getBookId() {
         return bookId;
     }
 
-    public void setBookId(int bookId) {
+    public void setBookId(String bookId) {
         this.bookId = bookId;
     }
 

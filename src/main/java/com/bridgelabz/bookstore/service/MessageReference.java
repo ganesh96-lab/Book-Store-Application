@@ -20,4 +20,10 @@ public class MessageReference {
     public static final String FILE_UPLOADED = "File uploaded and saved in db";
 	public static final String UPLOADED_SINGLE_BOOK = "Single book record inserted";
 	public static final String DELETE_USER = "user deleted where id is : ";
+	public static final String ADDED_TO_CART = "Book added to cart successfully";
+	public static final String CART_UPDATED = "Cart updated successfully";
+	public static final String CART_CLEARED = "Cart cleared successfully";
+	public static final String BOOK_NOT_FOUND = "Book not found";
+	public static final String BOOK_NOT_IN_CART = "Book not found in cart";
+	public static final String INVALID_QUANTITY = "Quantity must be at least 1";
 }
